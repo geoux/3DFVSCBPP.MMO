@@ -3,6 +3,7 @@ public class Solution {
     float capMembership;
     float packingMemebership;
     String algorithm;
+    float time;
 
     public float getCost() {
         return cost;
@@ -34,5 +35,13 @@ public class Solution {
 
     public void setAlgorithm(String algorithm) {
         this.algorithm = algorithm;
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public void setTime(float time) {
+        this.time = time;
     }
 }

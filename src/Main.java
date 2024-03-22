@@ -27,6 +27,8 @@ public class Main {
         instancesNames = new ArrayList<>();
         resultFiles = new ArrayList<>();
 
+        ArrayList<InstanceData> finalAnalysis = new ArrayList<>();
+
         for(int i = 1; i < 4; i++){
             String dirName = "results/G"+i+"/instances/";
             try {
@@ -70,22 +72,24 @@ public class Main {
                 Tools.saveRealPFByInstance(realPF,fixedDirName+name);
 
                 System.out.println("Processing metrics for PF of "+name);
-                //ToDo, metrics
-                String metricFolder = "results/G"+i+"/metrics/";
                 for(List<Solution> pf : pfAlg){
-                    MoMetrics mo = new MoMetrics();
-                    double errorRate = mo.ErroRate(pf,realPF);
-                    double generationalDistance = mo.GenerationalDistance(pf,realPF);
-                    double dispersion = mo.Spread(pf);
+                    double errorRate = MoMetrics.ErroRate(pf,realPF);
+                    double generationalDistance = MoMetrics.GenerationalDistance(pf,realPF);
+                    double dispersion = MoMetrics.Spread(pf);
+                    InstanceData id = new InstanceData(name.replace(".xls",""),pf.get(0).getAlgorithm(),pf.size(),errorRate,generationalDistance,dispersion,pf.get(0).getTime());
+                    finalAnalysis.add(id);
                 }
 
 
                 realPF.clear();
+                pfAlg.clear();
                 //Tools.removeOldSolutionsDir();
                 System.out.println("-------------------------------------------------");
             }
             instancesNames.clear();
-
+            resultFiles.clear();
         }
+        Tools.saveMetricsFile(finalAnalysis);
+        System.out.println("Done.");
     }
 }

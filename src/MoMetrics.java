@@ -5,7 +5,7 @@ import java.util.List;
 public class MoMetrics {
 
     /*** porciento de soluciones q no son miembros del frente de pareto verdadero **/
-    public double ErroRate(List<Solution> solutionsFPcurrent, List<Solution> solutionsFPtrue){
+    static double ErroRate(List<Solution> solutionsFPcurrent, List<Solution> solutionsFPtrue){
         double tasaError = 0;
         for (Solution estadoM : solutionsFPcurrent) {
             boolean found = solutionsFPtrue.stream().anyMatch(x ->
@@ -20,7 +20,7 @@ public class MoMetrics {
     }
 
     /*** Indica  qui tan  lejos  estan  los  elementos  del frente  de  Pareto  actual  respecto  al  frente  de  Pareto  verdadero ****/
-    public double GenerationalDistance(List<Solution> solutionsFPcurrent, List<Solution> solutionsFPtrue) {
+    static double GenerationalDistance(List<Solution> solutionsFPcurrent, List<Solution> solutionsFPtrue) {
 
         float cumulativeDistance = 0;
         for (Solution estadoM1 : solutionsFPcurrent) {
@@ -39,7 +39,7 @@ public class MoMetrics {
         return Math.sqrt(cumulativeDistance) / solutionsFPcurrent.size();
     }
 
-    public double Spread(List<Solution> estados){
+    static double Spread(List<Solution> estados){
         ArrayList<Double> distancias = new ArrayList<>();
         double min = 999999999;
         for (int i = 0; i < estados.size()-1; i++) {

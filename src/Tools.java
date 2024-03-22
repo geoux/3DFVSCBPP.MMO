@@ -28,6 +28,7 @@ class Tools {
                 solution.setCost((float) row.getCell(0).getNumericCellValue());
                 solution.setCapMembership((float) row.getCell(1).getNumericCellValue());
                 solution.setPackingMemebership((float) row.getCell(2).getNumericCellValue());
+                solution.setTime(Main.time);
                 aproxPF.add(solution);
                 i++;
                 row = sheet.getRow(i);
@@ -245,6 +246,38 @@ class Tools {
             File old = new File("results/G1/fixed");
             File newFile = new File("results/G1/solutions");
             old.renameTo(newFile);
+        }
+    }
+
+    static void saveMetricsFile(ArrayList<InstanceData> data){
+        try {
+            FileOutputStream fileout = new FileOutputStream(new File("Metrics.xls"));
+            Workbook ficheroWb = new HSSFWorkbook();
+            Sheet sheet = ficheroWb.createSheet("Main");
+            Row row = sheet.createRow(0);
+            row.createCell(0).setCellValue("Instance");
+            row.createCell(1).setCellValue("Algorithm");
+            row.createCell(2).setCellValue("Non Dominated Average");
+            row.createCell(3).setCellValue("Error Rate");
+            row.createCell(4).setCellValue("Generational Distance");
+            row.createCell(5).setCellValue("Dispersion");
+            row.createCell(6).setCellValue("Time (sec)");
+            int rowIndex = 1;
+            for(InstanceData id : data){
+                row = sheet.createRow(rowIndex);
+                row.createCell(0).setCellValue(id.getInstanceName());
+                row.createCell(1).setCellValue(id.getAlgorithm());
+                row.createCell(2).setCellValue(id.getNonDominatedSolutions());
+                row.createCell(3).setCellValue(id.getErrorRate());
+                row.createCell(4).setCellValue(id.getGenerationalDistance());
+                row.createCell(5).setCellValue(id.getDispersion());
+                row.createCell(6).setCellValue(id.getTime());
+                rowIndex++;
+            }
+            ficheroWb.write(fileout);
+            fileout.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
