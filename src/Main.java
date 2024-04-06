@@ -1,4 +1,5 @@
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class Main {
                         .forEach(path -> {
                             int pos = path.getFileName().toString().indexOf("_");
                             String algName = path.getFileName().toString().substring(0,pos);
-                            Pair<String,String> p = new Pair<>(algName,path.getFileName().toString());
+                            Pair<String,String> p = new ImmutablePair<>(algName,path.getFileName().toString());
                             resultFiles.add(p);
                         });
             } catch (IOException e) {
